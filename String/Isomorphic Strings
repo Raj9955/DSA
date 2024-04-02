@@ -1,0 +1,51 @@
+LeetCode 205
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+
+Example 1:
+Input: s = "egg", t = "add"
+Output: true
+
+Example 2:
+Input: s = "foo", t = "bar"
+Output: false
+
+Example 3:
+Input: s = "paper", t = "title"
+Output: true
+
+Soln:
+
+// one key will be mapped to one value
+// same value can't be mapped to multiple key.
+
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+
+        if(s.length() != t.length())
+            return false;
+
+        HashMap<Character,Character> hm = new HashMap<>();
+        for(int i=0;i<s.length();i++)
+        {
+            if(hm.containsKey(s.charAt(i))) // check is key is present if yes then same mapping will be used for 2nd string.
+            {
+                char ch = hm.get(s.charAt(i));
+                if(ch != t.charAt(i))
+                    return false;
+            }
+            else if(!hm.containsValue(t.charAt(i))) // check if same value is used for another key
+            {
+                hm.put(s.charAt(i),t.charAt(i));
+            }
+            else
+                return false;
+        }
+
+        return true;
+
+    }
+}
