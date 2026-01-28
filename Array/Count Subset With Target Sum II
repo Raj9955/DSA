@@ -24,9 +24,9 @@ Output: 0
 Explanation: No subsets exist with sum equal to k.
 
 
-solution: 
-import java.util.*;
+solution:  Meet-in-the-Middle technique
 
+import java.util.*;
 class Solution {
     public int countSubset(int[] arr, int k) {
         int n = arr.length;
