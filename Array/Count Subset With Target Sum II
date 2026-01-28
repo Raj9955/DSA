@@ -1,1 +1,71 @@
+The problem can be found at the following link: 🔗 Question Link
+
+🧩 Problem Description
+You are given an array arr[] and an integer k. Your task is to find the count of subsets whose sum equals k.
+
+A subset is any combination of elements from the array (including the empty subset). The goal is to efficiently count all possible subsets that sum to the target value k.
+
+Note: It is guaranteed that the number of valid subsets will fit within a 32-bit integer.
+
+📘 Examples
+Example 1
+Input: arr[] = [1, 3, 2], k = 3
+Output: 2
+Explanation: The two subsets whose sum equals k are [1, 2] and [3].
+
+Example 2
+Input: arr[] = [4, 2, 3, 1, 2], k = 4
+Output: 3
+Explanation: The three subsets whose sum equals k are [4], [2, 2] and [3, 1].
+
+Example 3
+Input: arr[] = [10, 20, 30], k = 25
+Output: 0
+Explanation: No subsets exist with sum equal to k.
+
+
+solution: 
+import java.util.*;
+
+class Solution {
+    public int countSubset(int[] arr, int k) {
+        int n = arr.length;
+        int mid = n / 2;
+
+        int[] left = Arrays.copyOfRange(arr, 0, mid);
+        int[] right = Arrays.copyOfRange(arr, mid, n);
+
+        // Map to store sum -> frequency
+        HashMap<Long, Integer> map = new HashMap<>();
+
+        int m = right.length;
+
+        // All subsets of right half
+        for (int mask = 0; mask < (1 << m); mask++) {
+            long sum = 0;
+            for (int i = 0; i < m; i++) {
+                if ((mask & (1 << i)) != 0) {
+                    sum += right[i];
+                }
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+
+        int ans = 0;
+        m = left.length;
+
+        // All subsets of left half
+        for (int mask = 0; mask < (1 << m); mask++) {
+            long sum = 0;
+            for (int i = 0; i < m; i++) {
+                if ((mask & (1 << i)) != 0) {
+                    sum += left[i];
+                }
+            }
+            ans += map.getOrDefault((long) k - sum, 0);
+        }
+
+        return ans;
+    }
+}
 
